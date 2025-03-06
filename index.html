@@ -389,7 +389,7 @@
       <h2 class="section-title">配属GPA記録フォーム</h2>
       <div class="links-container">
         <p>このフォームでは、データの重複送信を防ぐためにメールアドレスを記録します。</p>
-        <p>収集するデータは「配属年度・配属研究室・学科・配属時のGPA」のみであり、メールアドレスは統計分析には使用しません。</p>
+        <p>使用するデータは「配属年度・配属研究室・学科・配属時のGPA」のみであり、メールアドレスは統計分析には使用しません。</p>
         <p>送信された情報はApps Scriptを介して以下のスプレッドシートに記録されます。</p>
         <p>頂いた情報は統計目的でのみ使用され、個人を特定することはありません。</p>
         <p>それでも心配な人向けにこのフォームのソースコードをGitHubで公開しています。</p>
@@ -402,6 +402,12 @@
           </svg> GitHubリポジトリを開く
         </a>
         <form id="form">
+          <label>パスワード:</label>
+          <input type="password" id="password" placeholder="サイトに記載のパスワードを入力" required>
+          
+          <label>メールアドレス:</label>
+          <input type="email" id="email" placeholder="例: yourname@elms.hokudai.ac.jp" required>
+          
           <label>配属年度:</label>
           <select id="year" required>
             <option value="">選択してください</option>
@@ -493,21 +499,23 @@
       });
 
       function submitForm() {
-          var lab = document.getElementById('lab').value;
-          var gakka = document.getElementById('gakka').value;
-          var gpa = document.getElementById('gpa').value;
-          var year = document.getElementById('year').value;
-
-          if (lab === "" || gakka === "" || gpa === "" || year === "") {
-              alert("すべてのフィールドを入力してください");
-              return;
+          var password = document.getElementById("password").value;
+          var email = document.getElementById("email").value;
+          var year = document.getElementById("year").value;
+          var lab = document.getElementById("lab").value;
+          var gakka = document.getElementById("gakka").value;
+          var gpa = document.getElementById("gpa").value;
+        
+          if (!password || !email || !year || !lab || !gakka || !gpa) {
+            alert("すべてのフィールドを入力してください");
+            return;
           }
-
+        
           google.script.run.withSuccessHandler(function(response) {
-              document.getElementById('message').innerText = response;
-              document.getElementById('form').reset();
-          }).saveData(lab, gakka, gpa, year);
-      }
+            document.getElementById("message").innerText = response;
+            document.getElementById("form").reset();
+          }).saveData(year, lab, gakka, gpa, password, email);
+        }
     </script>
   </body>
 </html>
