@@ -1,5 +1,4 @@
-var SECRET_KEY = "hokyak";
-var PRIVATE_SHEET_ID = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; //非公開シート
+var PRIVATE_SHEET_ID = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; // 非公開シート（メールアドレス管理）
 var PUBLIC_SHEET_ID = "1TbiLnLd5zbzDcFYL7PB8zACjdBi964gbUP1VqbUbQng"; // 公開シート
 
 function doGet() {
@@ -7,16 +6,11 @@ function doGet() {
 }
 
 function validateEmail(email) {
-  var allowedDomain = "@elms.hokudai.ac.jp";
-  return email.endsWith(allowedDomain);
+  return email.endsWith("@elms.hokudai.ac.jp");
 }
 
-function saveData(year, lab, gakka, gpa, password, email) {
-  console.log("受け取ったパスワード: " + password);
-
-  if (password !== SECRET_KEY) {
-    return "エラー: 合言葉が違います。";
-  }
+function saveData(year, lab, gakka, gpa, email) {
+  console.log("受け取ったメール: " + email);
 
   if (!validateEmail(email)) {
     return "エラー: 学内メールアドレスを入力してください。";
@@ -37,6 +31,7 @@ function saveData(year, lab, gakka, gpa, password, email) {
 
   var privateData = privateSheet.getDataRange().getValues();
 
+  // すでに同じメールアドレスが登録されていないかチェック（非公開シート）
   for (var i = 1; i < privateData.length; i++) {
     if (privateData[i][1] === email) {
       return "エラー: あなたはすでにデータを送信済みです。";
