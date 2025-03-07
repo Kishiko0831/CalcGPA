@@ -2,7 +2,7 @@ var PRIVATE_SHEET_ID = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 var PUBLIC_SHEET_ID = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
 function doGet() {
-  return HtmlService.createHtmlOutputFromFile("index").setTitle("北薬データベース");
+  return HtmlService.createHtmlOutputFromFile("index").setTitle("xxxxxxxxx");
 }
 
 function validateEmail(email) {
@@ -27,11 +27,11 @@ function saveData(year, lab, gakka, gpa, email) {
   }
   if (!publicSheet) {
     publicSheet = publicSpreadsheet.insertSheet(lab);
-    publicSheet.appendRow(["配属年度", "日時", "薬科学科", "薬学科"]);
+    publicSheet.appendRow(["配属年度", "日時", "xxxx1", "xxxx2"]);
   }
   if (!summarySheet) {
     summarySheet = publicSpreadsheet.insertSheet("Summary");
-    summarySheet.appendRow(["配属年度", "薬科学科 平均", "薬科学科 標準偏差", "薬学科 平均", "薬学科 標準偏差"]);
+    summarySheet.appendRow(["配属年度", "xxxx1 平均", "xxxx1 標準偏差", "xxxx2 平均", "xxxx2 標準偏差"]);
   }
 
   var privateData = privateSheet.getDataRange().getValues();
@@ -46,9 +46,9 @@ function saveData(year, lab, gakka, gpa, email) {
 
   var publicData = [year, timestamp, "", ""];
   if (!isNaN(parseFloat(gpa))) {
-    if (gakka === "薬科学科") {
+    if (gakka === "xxxx1") {
       publicData[2] = parseFloat(gpa);
-    } else if (gakka === "薬学科") {
+    } else if (gakka === "xxxx2") {
       publicData[3] = parseFloat(gpa);
     }
   }
@@ -90,7 +90,7 @@ function updateSummarySheet() {
 
   var summarySheet = publicSpreadsheet.getSheetByName("Summary");
   summarySheet.clear();
-  summarySheet.appendRow(["配属年度", "薬科学科 平均", "薬科学科 標準偏差", "薬学科 平均", "薬学科 標準偏差"]);
+  summarySheet.appendRow(["配属年度", "xxx1 平均", "xxx1 標準偏差", "xxxx2 平均", "xxxx2 標準偏差"]);
 
   var sortedYears = Object.keys(dataMap).sort((a, b) => b - a);
 
