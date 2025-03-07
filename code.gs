@@ -1,12 +1,12 @@
 var PRIVATE_SHEET_ID = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-var PUBLIC_SHEET_ID = "1TbiLnLd5zbzDcFYL7PB8zACjdBi964gbUP1VqbUbQng";
+var PUBLIC_SHEET_ID = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
 function doGet() {
   return HtmlService.createHtmlOutputFromFile("index").setTitle("北薬データベース");
 }
 
 function validateEmail(email) {
-  return email.endsWith("@elms.hokudai.ac.jp");
+  return email.endsWith("@xxxxxxxxxxx.com");
 }
 
 function saveData(year, lab, gakka, gpa, email) {
